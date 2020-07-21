@@ -12,6 +12,10 @@ let h;
 let path = [];
 let current;
 let state = -1;
+let song;
+let button;
+let startastar = 0;
+
 
 
 function removethis(arr, elt){
@@ -31,20 +35,35 @@ function heuristic(a,b){
     return d;
 }
 
+
+function preload(){
+    song = loadSound('song.mp3')
+}
+
 function mousePressed(){
     state = WALL;
-    
-    
-
 }
 function mouseReleased(){
-    state = DRAW; 
+    state = -1;
+    if(startastar == 1){
+        state = DRAW;
+    }
 }
+
 
 function setup(){
     createCanvas(600,600);
+    state = -1;
     w = width / cols;
     h = height / rows;
+    button  = createButton('start!');
+    button.position(325, 650)
+    button.mousePressed(()=>{
+        startastar = 1;
+    });
+    
+    song.play();
+    
     for(let i = 0; i< cols; i++){
         grid[i] = new Array(cols);
     }
@@ -88,7 +107,7 @@ function draw(){
         }
 
     }
-    else if(state == DRAW){
+    else if(state === DRAW){
         if(openlist.length > 0){
             // keep going
             let lowest = 0;
@@ -102,7 +121,8 @@ function draw(){
                 //find the path  
                 noLoop();
                 console.log('Done');
-                state = WALL;
+                song.stop();
+                
             }
             removethis(openlist, current);
             closedlist.push(current);

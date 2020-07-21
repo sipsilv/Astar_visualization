@@ -10,6 +10,7 @@ class Spot{
         this.wall = false;
     }
     show(color){
+        
         fill(color);
         noStroke();
         if(this.wall){
@@ -17,6 +18,7 @@ class Spot{
             stroke(0);
         }
         rect(this.i * w + 1 , this.j * h + 1, w - 2 , h - 2);
+        
     }
     addNeighbours(){
         if(this.i < cols - 1){
